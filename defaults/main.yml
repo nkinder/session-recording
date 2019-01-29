@@ -1,2 +1,9 @@
 ---
-install_session_player: false
+use_sssd: True
+install_session_player: False
+session_recording_output: journal
+elastic_host: localhost
+session_recording_writer: {
+  "rsyslog": "syslog",
+  "journal": "journal"
+}
