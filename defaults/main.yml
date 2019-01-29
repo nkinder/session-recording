@@ -1,2 +1,2 @@
 ---
-# defaults file for session-recording
+install_session_player: false

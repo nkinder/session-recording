@@ -1,2 +1,12 @@
 ---
-# tasks file for session-recording
+- name: install recording packages
+  package:
+    name: "{{ item }}"
+  loop:
+    - tlog
+    - sssd
+
+- name: install cockpit session player
+  package:
+    name: cockpit-session-recording
+  when: install_session_player
