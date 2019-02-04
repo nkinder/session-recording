@@ -1,2 +1,11 @@
 ---
-# handlers file for session-recording
+
+- name: restart rsyslog
+  service:
+    name: rsyslog
+    state: restarted
+
+- name: restart sssd
+  service:
+    name: sssd
+    state: restarted

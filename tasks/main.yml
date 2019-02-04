@@ -24,6 +24,7 @@
     mode: 0600
     force: no
   when: ( use_sssd ) and ( ansible_facts.packages.sssd < "2.1" )
+  notify: restart sssd
 
 - name: configure sssd session recording config
   template:
@@ -33,6 +34,7 @@
     group: root
     mode: 0600
   when: use_sssd
+  notify: restart sssd
 
 - name: configure tlog rec session
   template:
@@ -50,3 +52,4 @@
     group: root
     mode: 0600
   when: session_recording_output == "rsyslog"
+  notify: restart rsyslog

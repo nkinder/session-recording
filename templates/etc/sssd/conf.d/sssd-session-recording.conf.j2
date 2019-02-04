@@ -1,4 +1,4 @@
 [session_recording]
-scope=none
-users=
-groups=
+scope={{ sssd_scopes[scope_sssd] }}
+users={{ users_sssd }}
+groups={{ groups_sssd }}
