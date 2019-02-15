@@ -10,3 +10,46 @@
   package:
     name: cockpit-session-recording
   when: install_session_player
+
+- name: get the rpm package facts
+  package_facts:
+    manager: "auto"
+
+- name: configure basic sssd
+  template:
+    src: 'etc/sssd/sssd.conf.j2'
+    dest: /etc/sssd/sssd.conf
+    owner: root
+    group: root
+    mode: 0600
+    force: no
+  when: ( use_sssd ) and ( ansible_facts.packages.sssd < "2.1" )
+  notify: restart sssd
+
+- name: configure sssd session recording config
+  template:
+    src: 'etc/sssd/conf.d/sssd-session-recording.conf.j2'
+    dest: /etc/sssd/conf.d/sssd-session-recording.conf
+    owner: root
+    group: root
+    mode: 0600
+  when: use_sssd
+  notify: restart sssd
+
+- name: configure tlog rec session
+  template:
+    src: 'etc/tlog/tlog-rec-session.conf.j2'
+    dest: /etc/tlog/tlog-rec-session.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: configure rsyslog to elastic logging
+  template:
+    src: 'etc/rsyslog.d/session_recording_to_elastic.conf.j2'
+    dest: /etc/rsyslog.d/session_recording_to_elastic.conf
+    owner: root
+    group: root
+    mode: 0600
+  when: session_recording_output == "rsyslog"
+  notify: restart rsyslog
