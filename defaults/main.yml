@@ -15,3 +15,5 @@ session_recording_writer: {
   "rsyslog": "syslog",
   "journal": "journal"
 }
+restart_cockpit: False
+enable_cockpit: False

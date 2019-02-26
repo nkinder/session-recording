@@ -41,6 +41,16 @@ You can choose to send recorded session to ElasticSearch through rsyslog, theref
 
 - `elastic_host` (default: `localhost`)
 
+There is an option to only restart Cockpit
+
+- `restart_cockpit` (default: `False`)
+
+And to enable Cockpit to start on boot (this will not start Cockpit right away, but only after reboot)
+
+- `enable_cockpit` (default: `False`)
+
+
+
 Dependencies
 ------------
 
