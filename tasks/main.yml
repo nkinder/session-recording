@@ -41,7 +41,7 @@
     group: root
     mode: 0600
     force: no
-  when: ( use_sssd ) and ( ansible_facts.packages.sssd < "2.1" )
+  when: ( use_sssd ) and ( ansible_facts.packages.sssd[0].version < "2.1" )
   notify: restart sssd
 
 - name: configure sssd session recording config
