@@ -6,46 +6,44 @@ This role configures a system for terminal session recording.
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+This role has no required pre-requisites currently.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
-
-You could specify usage of SSSD which is prefered way of managing recorded users or groups:
+Configure session recording with SSSD, the preferred way of managing recorded users or groups:
 
 - `use_sssd` (default: `True`)
 
-The next variable provides info for SSSD recording scope - `all` / `some` / `none`:
+Configure SSSD recording scope - `all` / `some` / `none`:
 
 - `scope_sssd` (default: `none`)
 
-List of users separated by coma which will be recorded ( e.g. root,user1,q ):
+Comma-separated list of users to be recorded ( e.g. recordeduser, testuser1 ):
 
 - `users_sssd` (default: `""`)
 
-List of users separated by coma which will be recorded ( e.g. users,wheel ):
+Comma-separated list of groups to be recorded ( e.g. recordedgroup, wheel, ):
 
 - `groups_sssd` (default: `""`)
 
-You can choose to install `cockpit-session-recording` package or not:
+Install`the cockpit-session-recording`package(RHEL8 only, currently):
 
 - `install_session_player` (default: `False`)
 
-Next variable specifies output of `tlog-rec-session`. Possible values are: `rsyslog` , `journal`:
+Log writer type(output destination) of tlog-rec-session. Possible values are: `rsyslog` , `journal`:
 
 - `session_recording_output` (default: `journal`)
 
-You can choose to send recorded session to ElasticSearch through rsyslog, therefore next variable provides value hostname of ElasticSearch:
+ElasticSearch hostname, used when session recording is configured to send to ElasticSearch through rsyslog:
 
 - `elastic_host` (default: `localhost`)
 
-There is an option to only restart Cockpit
+Restart the Cockpit service:
 
 - `restart_cockpit` (default: `False`)
 
-And to enable Cockpit to start on boot (this will not start Cockpit right away, but only after reboot)
+Enable Cockpit to start at system boot (this will not start Cockpit right away, only after reboot)
 
 - `enable_cockpit` (default: `False`)
 
@@ -54,11 +52,11 @@ And to enable Cockpit to start on boot (this will not start Cockpit right away, 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+This role has no dependencies currently.
 
 Example Playbook
 ----------------
-
+~~~
 ---
 - name: SR
   become: yes
@@ -67,11 +65,11 @@ Example Playbook
     - role: session-recording
       vars:
           scope_sssd: "some"
-          users_sssd: "q"
+          users_sssd: "recordeduser"
           install_session_player: True
           restart_cockpit: True
           enable_cockpit: True
-
+~~~
 Testing
 -------
 In-tree tests are provided that use molecule to test the role against docker containers.
@@ -79,7 +77,9 @@ These tests are designed to be used by CI, but they can also be run locally to t
 out while developing.  This is best done by installing molecule in a virtualenv:
 
   `$ virtualenv .venv`
+
   `$ source .venv/bin/activate`
+
   `$ pip install molecule docker`
 
 It is required to run the tests as a user who is authorized to run the 'docker' command
@@ -112,4 +112,6 @@ GPL v3.0
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+- Nathan Kinder @nkinder
+
+- Kirill Glebov @sabbaka
