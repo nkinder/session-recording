@@ -6,14 +6,5 @@ groups_sssd: ""
 install_session_player: False
 session_recording_output: journal
 elastic_host: localhost
-sssd_scopes: {
-  "all": "all",
-  "some": "some",
-  "none": "none",
-}
-session_recording_writer: {
-  "rsyslog": "syslog",
-  "journal": "journal"
-}
 restart_cockpit: False
 enable_cockpit: False

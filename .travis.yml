@@ -1,5 +1,4 @@
 ---
-sudo: required
 language: python
 services:
   - docker
@@ -13,7 +12,8 @@ install:
   - pip uninstall -y testinfra
   - pip install testinfra
 script:
+  - molecule --version
+  - ansible --version
+  - molecule lint
+  - molecule syntax
   - molecule test
-branches:
-  only:
-    - master

@@ -1,2 +1,10 @@
 ---
-# vars file for session-recording
+sssd_scopes: {
+  "all": "all",
+  "some": "some",
+  "none": "none",
+}
+session_recording_writer: {
+  "rsyslog": "syslog",
+  "journal": "journal"
+}
