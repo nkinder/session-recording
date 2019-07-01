@@ -6,20 +6,33 @@ driver:
 lint:
   name: yamllint
   options:
-    config-file: molecule/default/yaml-lint.yml
+    config-file: molecule/default/yamllint.yml
 platforms:
   - name: instance
-    image: ${MOLECULE_DISTRO:-"centos:7"}
+    image: ${MOLECULE_DISTRO:-"fedora:29"}
     command: /sbin/init
+    privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    privileged: true
 provisioner:
   name: ansible
   log: true
   lint:
     name: ansible-lint
+  playbooks:
+    converge: ../../tests/tests_default.yml
+scenario:
+  name: default
+  test_sequence:
+    - destroy
+    - create
+    - converge
+    - idempotence
+    - check
+    - verify
+    - destroy
 verifier:
   name: testinfra
+  directory: ../../tests/
   lint:
     name: flake8
