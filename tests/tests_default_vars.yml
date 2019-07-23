@@ -1,0 +1,21 @@
+---
+- name: Ensure that the role declares all parameters in defaults
+  hosts: all
+
+  tasks:
+    - block:
+        - import_role:
+            name: session-recording
+            when: false
+    - assert:
+        that: "vars[item] is defined"
+      loop:
+        - use_sssd
+        - scope_sssd
+        - users_sssd
+        - groups_sssd
+        - install_session_player
+        - session_recording_output
+        - elastic_host
+        - restart_cockpit
+        - enable_cockpit
